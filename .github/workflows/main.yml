@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - "main"
-      - "morozovam-patch-1"
     tags:
       - "v*.*.*"
   pull_request:
