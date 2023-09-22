@@ -41,6 +41,6 @@ jobs:
         DRUMSCORE_SUPERUSER_PASSWORD: ${{ secrets.DRUMSCORE_SUPERUSER_PASSWORD }}
         
       run: |
-        cd backend   
-        pwd -L
+        cd backend
+        python manage.py migrate
         python manage.py test
