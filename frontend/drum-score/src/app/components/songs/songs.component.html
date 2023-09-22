@@ -1,0 +1,21 @@
+<div>
+  <br>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col-xs-1">№</th>
+      <th scope="col-xs-3">Артист</th>
+      <th scope="col-xs">Песня</th>
+      <th scope="col">Ноты</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let song of songs">
+      <th scope="row">{{ song.id }}</th>
+      <td>{{ song.artist.artist_name }}</td>
+      <td>{{ getSongName(song) }}</td>
+      <td (click)="OpenScore(song.id)"><div><app-music-note-list></app-music-note-list></div></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

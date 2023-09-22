@@ -1,0 +1,16 @@
+<div class="modal-header">
+			<h4 class="modal-title">{{getSongName(scores[0].song)}}</h4>
+			<button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+  <p>{{getSongName(scores[0].song)}}</p>
+  <div *ngFor="let score of scores">
+
+    <a [href]="score.score" target="_blank">{{score.score_type}}</a>
+
+  </div>
+
+</div>
+<div class="modal-footer">
+			<button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div>
