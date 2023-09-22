@@ -10,7 +10,8 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env: ${{ vars.ENV_CONTEXT_VAR }}
+env:
+  env_var: ${{ vars.ENV_CONTEXT_VAR }}
 
 jobs:
   django-test:
