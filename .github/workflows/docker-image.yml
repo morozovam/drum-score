@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master", "morozovam-develop" ]
+  pull_request:
+    branches: [ "master", "morozovam-develop" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image for drum-score-backend
+      run: docker build backend/. --file backend/Dockerfile --tag drum-score-backend:$(date +%s)
+      
+    - uses: actions/checkout@v3
+    - name: Build the Docker image for drun-score-frontend
+      run: docker build frontend/drum-score/. --file frontend/drum-score/Dockerfile --tag drum-score-frontend:$(date +%s)
