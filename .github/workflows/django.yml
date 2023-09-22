@@ -10,9 +10,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  env_var: ${{ vars.ENV_CONTEXT_VAR }}
-
 jobs:
   django-test:
 
@@ -34,8 +31,16 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
+      env:
+        DRUMSCORE_SECRET_KEY: ${{ secrets.DRUMSCORE_SECRET_KEY }}
+        DRUMSCORE_DEBUG: ${{ vars.DRUMSCORE_DEBUG }}
+        DRUMSCORE_DATABASE_URL: ${{ vars.DRUMSCORE_DATABASE_URL }}
+        DRUMSCORE_SQLITE_URL: ${{ vars.DRUMSCORE_SQLITE_URL }}
+        DRUMSCORE_SUPERUSER_USERNAME: ${{ secrets.DRUMSCORE_SUPERUSER_USERNAME }}
+        DRUMSCORE_SUPERUSER_EMAIL: ${{ secrets.DRUMSCORE_SUPERUSER_EMAIL }}
+        DRUMSCORE_SUPERUSER_PASSWORD: ${{ secrets.DRUMSCORE_SUPERUSER_PASSWORD }}
+        
       run: |
         cd backend   
         pwd -L
-        echo ${{ vars.ENV_CONTEXT_VAR }}
         python manage.py test
