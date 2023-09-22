@@ -25,7 +25,7 @@ jobs:
         with:
           images: |
             ${{ secrets.DOCKERHUB_USERNAME }}/drum-score-backend
-            ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/drum-score-backend            
+#            ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/drum-score-backend            
           tags: |
             type=schedule
             type=ref,event=branch
@@ -43,7 +43,7 @@ jobs:
         with:
           images: |
             ${{ secrets.DOCKERHUB_USERNAME }}/drum-score-frontend
-            ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/drum-score-frontend            
+#            ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/drum-score-frontend            
           tags: |
             type=schedule
             type=ref,event=branch
