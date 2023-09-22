@@ -1,0 +1,46 @@
+name: Django Test
+
+on:
+  push:
+    branches: 
+      - "main"
+      - "dev"
+    tags:
+      - "v*.*.*"
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  django-test:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        python-version: [ 3.11 ]
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4.7.0
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Dependencies
+      run: |
+        cd backend
+        pwd -L
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Run Tests
+      env:
+        DRUMSCORE_SECRET_KEY: ${{ secrets.DRUMSCORE_SECRET_KEY }}
+        DRUMSCORE_DEBUG: ${{ vars.DRUMSCORE_DEBUG }}
+        DRUMSCORE_DATABASE_URL: ${{ vars.DRUMSCORE_DATABASE_URL }}
+        DRUMSCORE_SQLITE_URL: ${{ vars.DRUMSCORE_SQLITE_URL }}
+        DRUMSCORE_SUPERUSER_USERNAME: ${{ secrets.DRUMSCORE_SUPERUSER_USERNAME }}
+        DRUMSCORE_SUPERUSER_EMAIL: ${{ secrets.DRUMSCORE_SUPERUSER_EMAIL }}
+        DRUMSCORE_SUPERUSER_PASSWORD: ${{ secrets.DRUMSCORE_SUPERUSER_PASSWORD }}
+        
+      run: |
+        cd backend   
+        pwd -L
+        python manage.py test
