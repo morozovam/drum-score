@@ -54,6 +54,7 @@ jobs:
         DRUMSCORE_SUPERUSER_PASSWORD: ${{ secrets.DRUMSCORE_SUPERUSER_PASSWORD }}
         
       run: |
+        . venv/bin/activate
         cd backend
         python manage.py collectstatic --noinput
         python manage.py migrate --noinput
