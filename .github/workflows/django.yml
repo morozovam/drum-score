@@ -29,13 +29,15 @@ jobs:
     - name: Install Dependencies
       run: |
         cd backend
-        pwd -L
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
       env:
-        DRUMSCORE_SECRET_KEY: ${{ secrets.DRUMSCORE_SECRET_KEY }}
         DRUMSCORE_DEBUG: ${{ vars.DRUMSCORE_DEBUG }}
+        DRUMSCORE_SECRET_KEY: ${{ secrets.DRUMSCORE_SECRET_KEY }}
+        DRUMSCORE_ALLOWED_HOSTS: ${{ vars.DRUMSCORE_ALLOWED_HOSTS }}
+        DRUMSCORE_LANGUAGE_CODE: ${{ vars.DRUMSCORE_LANGUAGE_CODE }}
+        DRUMSCORE_TIME_ZONE: ${{ vars.DRUMSCORE_TIME_ZONE }}
         DRUMSCORE_DATABASE_URL: ${{ vars.DRUMSCORE_DATABASE_URL }}
         DRUMSCORE_SQLITE_URL: ${{ vars.DRUMSCORE_SQLITE_URL }}
         DRUMSCORE_SUPERUSER_USERNAME: ${{ secrets.DRUMSCORE_SUPERUSER_USERNAME }}
@@ -44,5 +46,7 @@ jobs:
         
       run: |
         cd backend
-        python manage.py migrate
+        python manage.py collectstatic --noinput
+        python manage.py migrate --noinput
+        python manage.py ensure_adminuser --no-input
         python manage.py test
