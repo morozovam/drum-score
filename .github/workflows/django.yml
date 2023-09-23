@@ -14,23 +14,32 @@ on:
 
 jobs:
   django-test:
-
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 1
-      matrix:
-        python-version: [ 3.11 ]
     steps:
     - uses: actions/checkout@v4.1.0
-    - name: Set up Python ${{ matrix.python-version }}
+
+    - name: Set up Python 
+      id: setup-python
       uses: actions/setup-python@v4.7.0
       with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install Dependencies
+        python-version-file: 'backend/.python-version'
+    
+    - name: Restore pip dependencies
+      uses: actions/cache@v3
+      id: cache-venv-dependencies
+      with: 
+        path: |
+          venv
+        key: ${{ runner.os }}-venv-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/backend/requirements.txt') }}
+
+    - name: Install dependencies
+      if: steps.cache-venv-dependencies.outputs.cache-hit != 'true'
       run: |
-        cd backend
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        python -m venv venv
+        . venv/bin/activate
+        pip install --upgrade pip pip-tools
+        pip-sync ./backend/requirements.txt
+
     - name: Run Tests
       env:
         DRUMSCORE_DEBUG: ${{ vars.DRUMSCORE_DEBUG }}
@@ -45,6 +54,7 @@ jobs:
         DRUMSCORE_SUPERUSER_PASSWORD: ${{ secrets.DRUMSCORE_SUPERUSER_PASSWORD }}
         
       run: |
+        . venv/bin/activate
         cd backend
         python manage.py collectstatic --noinput
         python manage.py migrate --noinput
