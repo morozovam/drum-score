@@ -22,6 +22,6 @@ RUN mkdir "files" &&\
     mkdir "./files/static" &&\
     mkdir "./files/media"
 COPY dockerfiles/docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod a+x /docker-entrypoint.sh
+RUN chmod a+rx /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 EXPOSE 8000

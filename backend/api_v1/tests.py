@@ -6,5 +6,5 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(True, True)  # There is dummy test
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

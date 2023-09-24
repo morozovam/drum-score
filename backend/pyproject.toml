@@ -50,7 +50,7 @@ dev = [
 find = {}
 
 [tool.flake8]
-max-line-length = 160
+max-line-length = 79
 line-quotes = "\""
 ignore = [
     "B010",  # Do not call setattr(x, 'attr', val), instead use normal property access: x.attr = val
@@ -70,6 +70,10 @@ ignore = [
     "VNE003",  # Variable names that shadow builtins are not allowed
     "W503",  # https://www.flake8rules.com/rules/W503.html
     "E203", # whitespace before ':', disabled for black purposes https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html#slices
+    "T003", # use of Django-style assert statement found (instead of regular assert): assertEqual
+    "PT009", #  use a regular assert instead of unittest-style 'assertEqual'
+    "ABS101" # Relative import found
+
 ]
 banned-modules = """
     typing.Optional = Please use "x | None"
@@ -83,23 +87,23 @@ exclude = [
     "frontend",
     ".git",
     "__pycache__",
+    "backend/settings/__init__.py"
 ]
 
-#
-#[tool.isort]
-#profile = "google"
-#line_length = 160
-#multi_line_output = 3
-#use_parentheses = true
-#extra_standard_library = ["pytest"]
-#known_django = ["django", "restframework"]
-#sections = ["FUTURE", "STDLIB", "THIRDPARTY", "DJANGO", "FIRSTPARTY", "LOCALFOLDER"]
-#
-#
-#[tool.black]
-# exclude = '''
-# /(
-#   | migrations
-# )/
-# '''
-# line_length = 160
+[tool.isort]
+profile = "google"
+line_length = 79
+multi_line_output = 3
+use_parentheses = true
+extra_standard_library = ["pytest"]
+known_django = ["django", "restframework"]
+sections = ["FUTURE", "STDLIB", "THIRDPARTY", "DJANGO", "FIRSTPARTY", "LOCALFOLDER"]
+
+
+[tool.black]
+ exclude = '''
+ /(
+   | migrations
+ )/
+ '''
+ line_length = 79
