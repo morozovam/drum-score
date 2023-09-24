@@ -25,6 +25,7 @@ jobs:
         python-version-file: 'backend/.python-version'
     
     - name: Restore pip dependencies
+      if: runner.name != 'self-hosted'
       uses: actions/cache@v3
       id: cache-venv-dependencies
       with: 
@@ -56,6 +57,7 @@ jobs:
       run: |
         . venv/bin/activate
         cd backend
+        echo ${{ runner.name }}
         python manage.py collectstatic --noinput
         python manage.py migrate --noinput
         python manage.py ensure_adminuser --no-input
