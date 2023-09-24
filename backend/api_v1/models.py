@@ -1,11 +1,12 @@
 from django.db import models
-from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 # Create your models here.
 
 
 class Artist(models.Model):
-    artist_name = models.CharField(verbose_name='Артист', max_length=50, unique=True)
+    artist_name = models.CharField(verbose_name='Артист',
+                                   max_length=50,
+                                   unique=True)
 
     def __str__(self):
         return self.artist_name
@@ -16,7 +17,9 @@ class Artist(models.Model):
 
 
 class Song(models.Model):
-    song_name = models.CharField(verbose_name='Песня', max_length=50, unique=True)
+    song_name = models.CharField(verbose_name='Песня',
+                                 max_length=50,
+                                 unique=True)
     artist = models.ForeignKey(Artist, on_delete=models.PROTECT)
     performer = models.ForeignKey(Artist,
                                   on_delete=models.PROTECT,
@@ -26,11 +29,13 @@ class Song(models.Model):
 
     def __str__(self):
         if (self.artist_id == self.performer_id) or (self.performer is None):
-            return "{artist} - {name}".format(artist=self.artist,  name=self.song_name)
+            return "{artist} - {name}".format(artist=self.artist,
+                                              name=self.song_name)
         else:
-            return "{artist} - {name} (cover by {performer})".format(artist=self.artist,
-                                                                     name=self.song_name,
-                                                                     performer=self.performer)
+            return "{artist} - {name} (cover by {performer})".\
+                format(artist=self.artist,
+                       name=self.song_name,
+                       performer=self.performer)
 
     class Meta:
         verbose_name = 'Песня'
@@ -38,10 +43,10 @@ class Song(models.Model):
 
 
 def score_path(self, filename):
-    return "{artist_name}/{song}/{filename}".format(artist_name=self.song.artist,
-                                                    song=self.song.song_name,
-                                                    filename=filename,
-                                                    media_url=settings.MEDIA_URL)
+    return "{artist_name}/{song}/{filename}".\
+        format(artist_name=self.song.artist,
+               song=self.song.song_name,
+               filename=filename)
 
 
 class Score(models.Model):
@@ -58,7 +63,8 @@ class Score(models.Model):
                                   default=ScoreTypes.PDF)
 
     def __str__(self):
-        return "{artist} - {name}".format(artist=self.song.artist,  name=self.song.song_name)
+        return "{artist} - {name}".format(artist=self.song.artist,
+                                          name=self.song.song_name)
 
     class Meta:
         verbose_name = 'Ноты'

@@ -14,7 +14,7 @@ on:
 
 jobs:
   django-test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - uses: actions/checkout@v4.1.0
 
@@ -37,7 +37,7 @@ jobs:
       run: |
         python -m venv venv
         . venv/bin/activate
-        pip install --upgrade pip pip-tools
+        pip install --upgrade pip pip-tools flake8-django
         pip-sync ./backend/requirements.txt
 
     - name: Run Tests
@@ -60,3 +60,10 @@ jobs:
         python manage.py migrate --noinput
         python manage.py ensure_adminuser --no-input
         python manage.py test
+
+    - name: Run the linter
+      run: |
+        . venv/bin/activate
+        cd backend && flake8
+
+        

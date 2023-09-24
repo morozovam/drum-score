@@ -1,11 +1,12 @@
 # from django.shortcuts import render
-import rest_framework.pagination
+# import rest_framework.pagination
 from rest_framework import viewsets
 from .serializers import ArtistSerializer, SongSerializer, ScoreSerializer
 from .models import Artist, Song, Score
 # Create your views here.
 from rest_framework.metadata import SimpleMetadata
 import django_filters.rest_framework
+
 
 class ArtistViewSet(viewsets.ModelViewSet):
     queryset = Artist.objects.all()

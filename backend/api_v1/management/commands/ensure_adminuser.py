@@ -16,7 +16,8 @@ class Command(BaseCommand):
         parser.add_argument('--username', help="Admin's username")
         parser.add_argument('--email', help="Admin's email")
         parser.add_argument('--password', help="Admin's password")
-        parser.add_argument('--no-input', help="Read options from the environment",
+        parser.add_argument('--no-input',
+                            help="Read options from the environment",
                             action='store_true')
 
     def handle(self, *args, **options):
