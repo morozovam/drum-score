@@ -33,7 +33,7 @@ jobs:
         key: ${{ runner.os }}-venv-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/backend/requirements.txt') }}
 
     - name: Install dependencies
-      # if: steps.cache-venv-dependencies.outputs.cache-hit != 'true'
+      if: steps.cache-venv-dependencies.outputs.cache-hit != 'true'
       run: |
         python -m venv venv
         . venv/bin/activate
