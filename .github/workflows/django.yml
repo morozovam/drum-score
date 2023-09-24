@@ -14,7 +14,7 @@ on:
 
 jobs:
   django-test:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4.1.0
 
@@ -25,7 +25,6 @@ jobs:
         python-version-file: 'backend/.python-version'
     
     - name: Restore pip dependencies
-      if: runner.name != 'self-hosted'
       uses: actions/cache@v3
       id: cache-venv-dependencies
       with: 
