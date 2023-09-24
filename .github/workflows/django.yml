@@ -38,8 +38,14 @@ jobs:
         python -m venv venv
         . venv/bin/activate
         pip install --upgrade pip pip-tools
-        pip-sync ./backend/requirements.txt
-        pip install flake8-django flake8
+        cd backend
+        pip-sync requirements.txt dev-requirements.txt
+
+    - name: Run the linter
+      run: |
+        . venv/bin/activate
+        cd backend
+        flake8 .
 
     - name: Run Tests
       env:
@@ -62,10 +68,5 @@ jobs:
         python manage.py ensure_adminuser --no-input
         python manage.py test
 
-    - name: Run the linter
-      run: |
-        . venv/bin/activate
-        cd backend
-        flake8 .
 
         
