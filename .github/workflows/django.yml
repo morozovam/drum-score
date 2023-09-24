@@ -64,6 +64,7 @@ jobs:
     - name: Run the linter
       run: |
         . venv/bin/activate
-        cd backend && flake8 .
+        cd backend
+        flake8 .
 
         
