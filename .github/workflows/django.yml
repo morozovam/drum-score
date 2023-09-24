@@ -37,7 +37,8 @@ jobs:
       run: |
         python -m venv venv
         . venv/bin/activate
-        pip install --upgrade pip pip-tools flake8-django flake8
+        pip install --upgrade pip pip-tools
+        pip install flake8-django flake8
         pip-sync ./backend/requirements.txt
 
     - name: Run Tests
