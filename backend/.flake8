@@ -1,0 +1,6 @@
+[flake8]
+exclude=*/migrations/*
+per-file-ignores =
+    ./backend/settings/__init__.py:F403,F401
+    ./backend/settings/default.py:E501
+    ./backend/tests.py:F401

@@ -1,7 +1,12 @@
 Dockerfile
 .dockerignore
-.env
 .env.dist
 db.sqlite3
 **/__pycache__
 *.pyc
+.flake8
+pyproject.toml
+dev-requirements.txt
+.python-version
+**tests.py
+**files**
