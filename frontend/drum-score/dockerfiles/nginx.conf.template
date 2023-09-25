@@ -1,8 +1,8 @@
 events{}
 http {
     include /etc/nginx/mime.types;
-    upstream django {
-        server django:8000;
+    upstream api-upstream {
+        server ${DRUMSCORE_BACKEND}:8000;
     }
     server {
         listen 80;
@@ -10,13 +10,13 @@ http {
         root /usr/share/nginx/html;
         index index.html;
         location /api/ {
-            proxy_pass http://django;
+            proxy_pass http://api-upstream;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header Host $host;
             proxy_redirect off;
         }
         location /admin/ {
-            proxy_pass http://django;
+            proxy_pass http://api-upstream;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header Host $host;
             proxy_redirect off;
