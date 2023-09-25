@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   django:
-    container_name: django
+    container_name: ${DRUMSCORE_BACKEND:-DRUMSCORE_BACKEND}
     build: backend
     volumes:
       - sqlite_data:/app/sqllite/
@@ -15,14 +15,21 @@ services:
       - .env
     environment:
       DRUMSCORE_DEBUG: True
-
+      DRUMSCORE_SECRET_KEY: ${DRUMSCORE_SECRET_KEY:?error}
+      DRUMSCORE_ALLOWED_HOSTS: ${DRUMSCORE_ALLOWED_HOSTS:?error}
+      DRUMSCORE_DATABASE_URL: ${DRUMSCORE_DATABASE_URL:?error}
   nginx:
+    container_name: ${DRUMSCORE_FRONTEND:-DRUMSCORE_FRONTEND}
     build: frontend/drum-score
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
     ports:
       - "80:80"
+    env_file:
+      - .env
+    environment:
+      DRUMSCORE_BACKEND: ${DRUMSCORE_BACKEND:-DRUMSCORE_BACKEND}
     depends_on:
       - django
 volumes:
