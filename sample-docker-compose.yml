@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  drum-score-backend:
+    container_name: ${DRUMSCORE_BACKEND:-DRUMSCORE_BACKEND}
+    image: morozovam/drum-score-backend:${TAG:-latest}
+    volumes:
+      - sqlite_data:/app/sqllite/
+      - static_volume:/app/files/static/
+      - media_volume:/app/files/media/
+    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
+    expose:
+      - 8000
+    env_file:
+      - .env
+    environment:
+      DRUMSCORE_DEBUG: True
+      DRUMSCORE_SECRET_KEY: ${DRUMSCORE_SECRET_KEY:?error}
+      DRUMSCORE_ALLOWED_HOSTS: ${DRUMSCORE_ALLOWED_HOSTS:?error}
+      DRUMSCORE_DATABASE_URL: ${DRUMSCORE_DATABASE_URL:?error}
+  drum-score-frontend:
+    container_name: ${DRUMSCORE_FRONTEND:-DRUMSCORE_FRONTEND}
+    image: morozovam/drum-score-frontend:${TAG:-latest}
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
+    ports:
+      - "80:80"
+    env_file:
+      - .env
+    environment:
+      DRUMSCORE_BACKEND: ${DRUMSCORE_BACKEND:-DRUMSCORE_BACKEND}
+    depends_on:
+      - drum-score-backend
+volumes:
+  static_volume:
+  media_volume:
+  sqlite_data:
+
