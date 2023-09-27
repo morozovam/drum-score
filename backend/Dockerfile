@@ -18,10 +18,10 @@ COPY --from=builder /app/requirements.txt .
 RUN pip install --no-index --find-links=/wheels/ -r requirements.txt &&\
     rm -R /wheels
 COPY . .
+COPY --chmod=a+rx dockerfiles/docker-entrypoint.sh /docker-entrypoint.sh
 RUN mkdir "files" &&\
     mkdir "./files/static" &&\
     mkdir "./files/media"
-COPY dockerfiles/docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod a+rx /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 EXPOSE 8000
+HEALTHCHECK --interval=10s --timeout=5s --start-period=5s --retries=5 CMD [ "wget --no-verbose --tries=1 --spider http://localhost:8000/api/v1/ || exit 1" ]
