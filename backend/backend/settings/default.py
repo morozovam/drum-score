@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 import os
 from pathlib import Path
-import environ
 
+import environ
 
 env = environ.Env(
     # set casting, default value
