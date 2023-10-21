@@ -36,6 +36,10 @@ SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.bool("DEBUG", default=False)
 
 ALLOWED_HOSTS = env.tuple("ALLOWED_HOSTS", default=["0.0.0.0"])
+CSRF_TRUSTED_ORIGINS = env.tuple("CORS_ALLOWED_ORIGINS", default=[])
+
+# if env.tuple('CORS_ALLOWED_ORIGINS', default=None) is not None:
+CORS_ALLOWED_ORIGINS = env.tuple("CORS_ALLOWED_ORIGINS", default=[])
 
 # Application definition
 INSTALLED_APPS = [
@@ -136,8 +140,6 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 5,
 }
 
-# if env.tuple('CORS_ALLOWED_ORIGINS', default=None) is not None:
-CORS_ALLOWED_ORIGINS = env.tuple("CORS_ALLOWED_ORIGINS", default=[])
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
