@@ -19,6 +19,7 @@ RUN pip install --no-index --find-links=/wheels/ -r requirements.txt &&\
     rm -R /wheels
 COPY . .
 COPY --chmod=a+rx dockerfiles/docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod a+x /docker-entrypoint.sh
 RUN mkdir "files" &&\
     mkdir "./files/static" &&\
     mkdir "./files/media"
