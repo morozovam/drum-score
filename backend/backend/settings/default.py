@@ -17,9 +17,7 @@ import environ
 
 from django.core.management.utils import get_random_secret_key
 
-from api_v1.management.commands.url_from_allowed_hosts import (
-    url_from_allowed_hosts
-)
+from api_v1.management.url_from_allowed_hosts import get_url_from_allowed_hosts
 
 env = environ.Env(
     # set casting, default value
@@ -43,10 +41,16 @@ DEBUG = env.bool("DEBUG", default=False)
 
 ALLOWED_HOSTS = env.tuple("ALLOWED_HOSTS", default=["0.0.0.0"])
 
-CSRF_TRUSTED_ORIGINS = env.tuple("CORS_ALLOWED_ORIGINS", default=url_from_allowed_hosts(ALLOWED_HOSTS=ALLOWED_HOSTS))
+CSRF_TRUSTED_ORIGINS = env.tuple(
+    "CORS_ALLOWED_ORIGINS",
+    default=get_url_from_allowed_hosts(),
+)
 
 # if env.tuple('CORS_ALLOWED_ORIGINS', default=None) is not None:
-CORS_ALLOWED_ORIGINS = env.tuple("CORS_ALLOWED_ORIGINS", default=url_from_allowed_hosts(ALLOWED_HOSTS=ALLOWED_HOSTS))
+CORS_ALLOWED_ORIGINS = env.tuple(
+    "CORS_ALLOWED_ORIGINS",
+    default=get_url_from_allowed_hosts(),
+)
 
 # Application definition
 INSTALLED_APPS = [
