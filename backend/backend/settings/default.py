@@ -15,6 +15,10 @@ from pathlib import Path
 
 import environ
 
+from django.core.management.utils import get_random_secret_key
+
+from api_v1.management.url_from_allowed_hosts import get_url_from_allowed_hosts
+
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False)
@@ -30,16 +34,23 @@ env.read_env(os.path.join(BASE_DIR, ".env"))
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str("SECRET_KEY")
+SECRET_KEY = env.str("SECRET_KEY", default=get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=False)
 
 ALLOWED_HOSTS = env.tuple("ALLOWED_HOSTS", default=["0.0.0.0"])
-CSRF_TRUSTED_ORIGINS = env.tuple("CORS_ALLOWED_ORIGINS", default=[])
+
+CSRF_TRUSTED_ORIGINS = env.tuple(
+    "CORS_ALLOWED_ORIGINS",
+    default=get_url_from_allowed_hosts(),
+)
 
 # if env.tuple('CORS_ALLOWED_ORIGINS', default=None) is not None:
-CORS_ALLOWED_ORIGINS = env.tuple("CORS_ALLOWED_ORIGINS", default=[])
+CORS_ALLOWED_ORIGINS = env.tuple(
+    "CORS_ALLOWED_ORIGINS",
+    default=get_url_from_allowed_hosts(),
+)
 
 # Application definition
 INSTALLED_APPS = [
