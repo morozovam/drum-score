@@ -23,7 +23,7 @@ cognitive-complexity==1.3.0
     # via flake8-cognitive-complexity
 colorama==0.4.6
     # via click
-django==4.2.5
+django==4.2.8
     # via
     #   django-cors-headers
     #   django-filter
