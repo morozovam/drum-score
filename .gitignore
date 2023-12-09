@@ -12,3 +12,5 @@
 /backend/files/
 /backend/sqllite/
 /venv
+.vscode/settings.json
+db.sqlite3
