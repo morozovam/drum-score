@@ -1,5 +1,5 @@
 #STAGE 1
-FROM node:18.15-alpine AS build
+FROM node:20.10-alpine AS build
 RUN mkdir /app
 WORKDIR /app
 COPY package.json package-lock.json ./
