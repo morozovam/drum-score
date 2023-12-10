@@ -1,4 +1,4 @@
-FROM python:alpine as builder
+FROM python:3.11-alpine as builder
 
 WORKDIR /app
 
@@ -11,7 +11,7 @@ RUN apk update && \
     pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.txt &&\
     apk del build-deps
 
-FROM python:alpine
+FROM python:3.11-alpine
 WORKDIR /app
 COPY --from=builder /app/wheels /wheels
 COPY --from=builder /app/requirements.txt .
