@@ -31,7 +31,7 @@ services:
     env_file:
       - .env
     environment:
-      DRUMSCORE_BACKEND: ${DRUMSCORE_BACKEND:-DRUMSCORE_BACKEND}
+      DRUMSCORE_BACKEND_ADDRESS: ${DRUMSCORE_BACKEND_ADDRESS:-DRUMSCORE_BACKEND}
     depends_on:
       - django
 volumes:

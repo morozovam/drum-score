@@ -1,6 +1,6 @@
 [project]
 name = "drum-score-backend"
-version = "0.1.6"
+version = "0.1.7"
 authors = [
   { name="Aleksandr Morozov", email="github@alexandr.cc" },
 ]
